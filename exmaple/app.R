@@ -1,10 +1,13 @@
+
 library(shiny)
+library(ggplot2)
+library(ggpubr)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
   
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("Regression model"),
   
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
@@ -73,7 +76,7 @@ server <- function(input, output) {
     return(df)
   })
   
-    
+  
   output$Plot <- renderPlot({
     
     
@@ -82,17 +85,17 @@ server <- function(input, output) {
       return(ggplot(data = dataInput(), aes(dataInput()$x,dataInput()$y)) + 
                geom_point())
       
-      }
+    }
     
     else {
       
       return(ggplot(data = dataInput(), aes(dataInput()$x,dataInput()$y)) + 
-             geom_point() + 
-             geom_smooth(method = "lm", se=FALSE) +
-             stat_regline_equation(label.y = 15, aes(label = ..eq.label..)) +
-             stat_regline_equation(label.y = 14, aes(label = ..rr.label..)))
+               geom_point() + 
+               geom_smooth(method = "lm", se=FALSE) +
+               stat_regline_equation(label.y = 15, aes(label = ..eq.label..)) +
+               stat_regline_equation(label.y = 14, aes(label = ..rr.label..)))
     }
-  
+    
   })
   
   
@@ -112,6 +115,6 @@ server <- function(input, output) {
     
   })
 }
-  
+
 # Run the application 
 shinyApp(ui = ui, server = server)
